@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ movie.title }}{% endblock %}
+{% block content %}
+<h1>{{ movie.title }}</h1>
+<img src="{{ movie.poster }}" alt="{{ movie.title }}" width="200">
+<p>{{ movie.description }}</p>
+<p>Duration: {{ movie.duration }} mins</p>
+
+<form action="{{ url_for('book_ticket') }}" method="POST">
+    <input type="hidden" name="movie_id" value="{{ movie._id }}">
+    <input type="hidden" name="movie_title" value="{{ movie.title }}">
+    <label>Name:</label>
+    <input type="text" name="name" required><br>
+    <label>Email:</label>
+    <input type="email" name="email" required><br>
+    <label>Showtime:</label>
+    <select name="showtime">
+        {% for time in movie.showtimes %}
+        <option>{{ time }}</option>
+        {% endfor %}
+    </select><br>
+    <label>Tickets:</label>
+    <input type="number" name="tickets" min="1" required><br>
+    <button type="submit">Book Now</button>
+</form>
+{% endblock %}

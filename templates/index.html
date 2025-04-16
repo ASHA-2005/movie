@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Home - Movie Booking{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<section class="hero">
+    <h1>Welcome to MovieMania 🎬</h1>
+    <p>Book your favorite movies anytime, anywhere.</p>
+    <a href="{{ url_for('now_showing') }}" class="btn-primary">View Now Showing</a>
+</section>
+
+<!-- Movie Poster Gallery -->
+<h2 class="section-heading">Now Streaming</h2>
+<div class="poster-gallery">
+    <div class="poster-item">
+        <img src="https://i.pinimg.com/736x/92/9e/58/929e583a1fb0d6e00f60d67267723ed3.jpg" alt="Movie 1">
+    </div>
+    <div class="poster-item">
+        <img src="https://i.pinimg.com/474x/74/fa/74/74fa74df91ff0e6ad99b6ce46c4be37d.jpg" alt="Movie 2">
+    </div>
+    <div class="poster-item">
+        <img src="https://i.pinimg.com/736x/b8/c9/46/b8c946d4bc5173b2c41fd2fb658a2b2f.jpg" alt="Movie 3">
+    </div>
+    <div class="poster-item">
+        <img src="https://i.pinimg.com/736x/84/6f/39/846f3905270ee4352ee6e2c868ba116b.jpg" alt="Movie 4">
+    </div>
+</div>
+{% endblock %}

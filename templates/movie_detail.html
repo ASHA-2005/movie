@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% block title %}{{ movie.title }} - Details{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: #121212;
+        color: #e0e0e0;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .movie-container {
+        background-color: #1e1e1e;
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 700px;
+        margin: 40px auto;
+        box-shadow: 0 0 30px rgba(255, 193, 7, 0.1);
+    }
+
+    .movie-title {
+        font-size: 28px;
+        text-align: center;
+        color: #ffca28;
+        margin-bottom: 10px;
+    }
+
+    .movie-description,
+    .movie-meta {
+        text-align: center;
+        color: #ccc;
+        font-size: 15px;
+        margin: 10px 0;
+    }
+
+    .movie-showtimes {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .movie-showtimes ul {
+        padding: 0;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .movie-showtimes li {
+        background-color: #333;
+        color: #ffca28;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 20px;
+        margin-top: 30px;
+        color: #fff176;
+    }
+
+    .booking-form {
+        display: grid;
+        gap: 12px;
+        margin-top: 20px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .booking-form label {
+        font-size: 14px;
+        color: #ddd;
+        margin-bottom: 4px;
+    }
+
+    .booking-form input,
+    .booking-form select {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #555;
+        background-color: #2c2c2c;
+        color: #f5f5f5;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .booking-form button {
+        background: linear-gradient(to right, #ffc107, #ff9800);
+        border: none;
+        padding: 10px;
+        font-weight: bold;
+        border-radius: 30px;
+        color: #000;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .booking-form button:hover {
+        background: linear-gradient(to right, #ffb300, #ff5722);
+        transform: scale(1.05);
+        color: #fff;
+    }
+</style>
+
+<div class="movie-container">
+    <h2 class="movie-title">{{ movie.title }}</h2>
+    <p class="movie-description">{{ movie.description }}</p>
+    <p class="movie-meta"><strong>Duration:</strong> {{ movie.duration }} minutes</p>
+
+    <div class="movie-showtimes">
+        <p><strong>Showtimes:</strong></p>
+        <ul>
+            {% for time in movie.showtimes %}
+            <li>{{ time }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <h3>Book Tickets</h3>
+    <form action="{{ url_for('book_ticket') }}" method="post" class="booking-form">
+        <input type="hidden" name="movie_title" value="{{ movie.title }}">
+    
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" required>
+        </div>
+    
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+        </div>
+    
+        <div>
+            <label for="tickets">Number of Tickets:</label>
+            <input type="number" name="tickets" min="1" required>
+        </div>
+    
+        <div>
+            <label for="showtime">Showtime:</label>
+            <select name="showtime" required>
+                {% for time in movie.showtimes %}
+                <option value="{{ time }}">{{ time }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <div>
+            <label for="seats">Select Seat(s):</label>
+            <select name="seats" required>
+                <optgroup label="Front Seats">
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="A3">A3</option>
+                    <option value="A4">A4</option>
+                </optgroup>
+                <optgroup label="Center Seats">
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="B3">B3</option>
+                    <option value="B4">B4</option>
+                </optgroup>
+                <optgroup label="Corner Seats">
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C3">C3</option>
+                    <option value="C4">C4</option>
+                </optgroup>
+            </select>
+        </div>
+    
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #555;">
+    
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <h3>Payment</h3>
+            <p><strong>Total Amount:</strong> ₹{{ movie.price }} x number of tickets</p>
+    
+            <label for="payment-method">Select Payment Method:</label>
+            <select id="payment-method" name="payment_method" required>
+                <option value="card">Credit/Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Net Banking</option>
+            </select>
+    
+            <div id="dummy-payment-fields">
+                <label>Card/UPI/Account Info (Dummy):</label>
+                <input type="text" placeholder="Enter Dummy Payment Info" required>
+            </div>
+        </div>
+    
+        <button type="submit" class="pay-btn">Pay & Book</button>
+    </form>
+    {% endblock %}
+   

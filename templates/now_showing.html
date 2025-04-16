@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>🎬 Now Showing</h2>
+    <div class="movie-list">
+        {% for movie in movies %}
+        <div class="movie-card">
+            <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster">
+            <h3>{{ movie.title }}</h3>
+            <p>{{ movie.description }}</p>
+            <p><strong>Showtimes:</strong> {{ movie.showtimes | join(', ') }}</p>
+            <p><strong>Price:</strong> ₹150</p>
+
+
+            <form action="/movie/{{ movie._id }}" method="get">
+                <button type="submit">Book Ticket</button>
+            </form>
+        </div>
+        {% else %}
+        <p>No movies available right now.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
