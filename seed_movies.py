@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb+srv://asha8:asha2005@cluster0.liahrwi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client.movie_booking
 movies = db.movies
 
